@@ -1,11 +1,11 @@
-"use client"
-import useScrollControl from '@/hooks/useScrollControl'
+import Test from '@/components/Test'
 import React from 'react'
 
 const ParentPage = () => {
-  useScrollControl()
   return (
-    <div>ParentPage</div>
+    <div>ParentPage
+      <Test/>
+    </div>
   )
 }
 
