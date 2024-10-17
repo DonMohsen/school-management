@@ -1,3 +1,5 @@
+"use client"
+import useScrollControl from "@/hooks/useScrollControl";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -117,7 +119,7 @@ const menuItems = [
 ];
 
 const Menu = async () => {
- 
+ useScrollControl()
   return (
     <div className="mt-4 text-sm overflow-y-auto">
       {menuItems.map((i) => (

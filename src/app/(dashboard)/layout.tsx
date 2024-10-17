@@ -1,4 +1,5 @@
 import Menu from "@/components/Menu";
+import useScrollControl from "@/hooks/useScrollControl";
 import Image from "next/image";
 import Link from "next/link";
 
