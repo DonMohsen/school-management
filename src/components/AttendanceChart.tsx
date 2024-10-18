@@ -1,11 +1,9 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { PureComponent } from "react";
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
