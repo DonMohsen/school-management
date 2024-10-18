@@ -1,7 +1,8 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "no-unused-vars": "off", // Disable the default no-unused-vars rule
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }] // Adjust as necessary
+    "prefer-const": "off", // Disable the 'prefer-const' rule
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
   }
 }
