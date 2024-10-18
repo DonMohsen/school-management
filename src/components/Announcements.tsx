@@ -13,7 +13,7 @@ const Announcements = async () => {
 
 //   const data = await prisma.announcement.findMany({
 //     take: 3,
-//     orderBy: { date: "desc" },
+//     orderBy: { 2024/5/5: "desc" },
 //     where: {
 //       ...(role !== "admin" && {
 //         OR: [
@@ -36,10 +36,10 @@ const Announcements = async () => {
             <div className="flex items-center justify-between">
               <h2 className="font-medium">Title</h2>
               <span className="text-xs text-gray-400 bg-white rounded-md px-1 py-1">
-                date
+                2024-5-5
               </span>
             </div>
-            <p className="text-sm text-gray-400 mt-1">descripsion</p>
+            <p className="text-sm text-gray-400 mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, quam in!</p>
           </div>
         {/* )} */}
         {/* {data[1] && ( */}
@@ -47,10 +47,10 @@ const Announcements = async () => {
              <div className="flex items-center justify-between">
                <h2 className="font-medium">Title</h2>
                <span className="text-xs text-gray-400 bg-white rounded-md px-1 py-1">
-                 date
+                 2024-5-5
                </span>
              </div>
-             <p className="text-sm text-gray-400 mt-1">descripsion</p>
+             <p className="text-sm text-gray-400 mt-1">Lorem ipsum dolor sit amet consectetur.</p>
            </div>
         {/* )} */}
         {/* {data[2] && ( */}
@@ -58,10 +58,10 @@ const Announcements = async () => {
              <div className="flex items-center justify-between">
                <h2 className="font-medium">Title</h2>
                <span className="text-xs text-gray-400 bg-white rounded-md px-1 py-1">
-                 date
+                 2024-5-5
                </span>
              </div>
-             <p className="text-sm text-gray-400 mt-1">descripsion</p>
+             <p className="text-sm text-gray-400 mt-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dignissimos reiciendis quas sapiente voluptatem veritatis accusamus cum, libero quidem id fuga possimus culpa odit, adipisci quaerat doloribus ratione dicta, magni non?</p>
            </div>
         {/* )} */}
       </div>
