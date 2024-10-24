@@ -11,7 +11,7 @@ const Table = ({columns,renderRow,data}:{columns:{header:string;  accessor:strin
             <tr>
                 {columns.map((col)=>(
                     <th
-                    className='text-left text-sm'
+                    className={`${col?.className} text-left text-sm`}
                     key={col.header}>{col.header}</th>
                 ))}
             </tr>

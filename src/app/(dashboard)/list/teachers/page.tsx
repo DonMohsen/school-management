@@ -36,7 +36,7 @@ const TeacherList = () => {
     {
       header: "Address",
       accessor: "address",
-      className: "hidden lg:table-cell",
+      className: "hidden xl:table-cell",
     },
     ...(role === "admin"
       ? [
@@ -74,7 +74,7 @@ const TeacherList = () => {
         <td  className="hidden md:table-cell">
           {item.phone}
         </td>
-        <td  className="hidden md:table-cell">
+        <td  className="hidden xl:table-cell">
           {item.address}
         </td>
         <td>
