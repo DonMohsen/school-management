@@ -3,6 +3,8 @@
   "rules": {
     "prefer-const": "off", // Disable the 'prefer-const' rule
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn"
+
   }
 }
