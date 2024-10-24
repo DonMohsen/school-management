@@ -19,7 +19,6 @@ export const teachersData = [
     id: 2,
     teacherId: "1234567890",
     name: "Jane Doe",
-    email: "jane@doe.com",
     photo:
       "https://images.pexels.com/photos/936126/pexels-photo-936126.jpeg?auto=compress&cs=tinysrgb&w=1200",
     phone: "1234567890",
@@ -921,20 +920,20 @@ export const calendarEvents = [
   {
     title: "Math",
     allDay: false,
-    start: new Date(2024,9,17,8,0),
-    end: new Date(2024,9,17,9,45),
+    start: new Date(2024,9,24,8,0),
+    end: new Date(2024,9,24,9,45),
   },
   {
     title: "English",
     allDay: false,
-    start: new Date(2024,9,17,10,0),
-    end: new Date(2024,9,17,12,0),
+    start: new Date(2024,9,24,10,0),
+    end: new Date(2024,9,24,12,0),
   },
   {
     title: "Biology",
     allDay: false,
-    start: new Date(2024, 7, 12, 10, 0),
-    end: new Date(2024, 7, 12, 10, 45),
+    start: new Date(2024,9,24,14,0),
+    end: new Date(2024,9,24,14,45),
   },
   {
     title: "Physics",
