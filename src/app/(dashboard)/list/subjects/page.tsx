@@ -1,42 +1,22 @@
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, teachersData } from "@/lib/data";
+import { role, subjectsData, teachersData } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 
-const TeacherList = () => {
+const SubjectsList = () => {
   const columns = [
     {
       header: "Info",
       accessor: "info",
     },
     {
-      header: "Teacher ID",
-      accessor: "teacherId",
+      header: "Teachers",
+      accessor: "teachers",
       className: "hidden md:table-cell",
-    },
-    {
-      header: "Subjects",
-      accessor: "subjects",
-      className: "hidden md:table-cell",
-    },
-    {
-      header: "Classes",
-      accessor: "classes",
-      className: "hidden md:table-cell",
-    },
-    {
-      header: "Phone",
-      accessor: "phone",
-      className: "hidden lg:table-cell",
-    },
-    {
-      header: "Address",
-      accessor: "address",
-      className: "hidden xl:table-cell",
     },
     ...(role === "admin"
       ? [
@@ -54,37 +34,22 @@ const TeacherList = () => {
         <td className="flex  items-center p-4 gap-4">
 
 
-        <Image src={item.photo} alt="photo" width={40} height={40} className="md:hidden xl:block w-10 h-10 rounded-full object-cover"/>
         <div className="flex flex-col ">
           <h3 className="font-semibold">{item.name}</h3>
-          {item.email?(
-          <p className="text-gray-500 text-sm">{item?.email}</p>
-        ):(          <p className="text-gray-500 text-sm">No Email ...</p>
-        )}
+        
 
         </div>
         </td>
         <td  className="hidden md:table-cell">
-          {item.teacherId}
+          {item.teachers.join(" , ")}
         </td>
-        <td  className="hidden md:table-cell">
-          {item.classes.join(",")}
-        </td>
-        <td  className="hidden md:table-cell">
-          {item.subjects.join(",")}
-        </td>
-        <td  className="hidden md:table-cell">
-          {item.phone}
-        </td>
-        <td  className="hidden xl:table-cell">
-          {item.address}
-        </td>
+      
         <td>
           <div className="flex items-center gap-2 ">
             <Link className="flex gap-2" href={`/list/teachers/${item.id}`}>
             <button className="flex items-center justify-center w-7 h-7 rounded-full bg-lamaSky">
 
-            <Image src="/view.png" alt="view" width={16} height={16}/>
+            <Image src="/setting.png" alt="view" width={16} height={16}/>
             </button>
             {role==='admin'&&
               <button className="flex items-center justify-center w-7 h-7 rounded-full bg-lamaPurple">
@@ -102,7 +67,7 @@ const TeacherList = () => {
     <div className=" bg-white p-4 rounded-md flex-1 m-4 mt-0">
       {/* //!TOP */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">All teachers</h1>
+        <h1 className="hidden md:block text-lg font-semibold">All Subjects</h1>
         {/* //!SEARCHBAR */}
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
@@ -128,7 +93,7 @@ const TeacherList = () => {
         </div>
       </div>
       {/* //!LIST */}
-      <Table columns={columns} renderRow={renderRow} data={teachersData}/>
+      <Table columns={columns} renderRow={renderRow} data={subjectsData}/>
       {/* //!PAGINATION */}
       <Pagination/>
     </div>
@@ -137,4 +102,4 @@ const TeacherList = () => {
   );
 };
 
-export default TeacherList;
+export default SubjectsList;

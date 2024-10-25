@@ -333,7 +333,7 @@ export const parentsData = [
 export const subjectsData = [
   {
     id: 1,
-    name: "Math",
+    name: "Math", 
     teachers: ["Alice Phelps", "Russell Davidson"],
   },
   {
@@ -385,7 +385,7 @@ export const subjectsData = [
 
 export const classesData = [
   {
-    id: 1,
+    id: 1, 
     name: "1A",
     capacity: 20,
     grade: 1,
@@ -458,7 +458,7 @@ export const classesData = [
 
 export const lessonsData = [
   {
-    id: 1,
+    id: 1, 
     subject: "Math",
     class: "1A",
     teacher: "Tommy Wise",
@@ -667,7 +667,7 @@ export const assignmentsData = [
 
 export const resultsData = [
   {
-    id: 1,
+    id: 1, 
     subject: "Math",
     class: "1A",
     teacher: "John Doe",
@@ -769,7 +769,7 @@ export const resultsData = [
 ];
 
 export const eventsData = [
-  {
+  { 
     id: 1,
     title: "Lake Trip",
     class: "1A",
