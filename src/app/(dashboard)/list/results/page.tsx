@@ -1,3 +1,4 @@
+import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
@@ -77,19 +78,13 @@ const ResultsList = () => {
         </td>
         <td>
           <div className="flex items-center gap-2 ">
-            <Link className="flex gap-2" href={`/list/teachers/${item.id}`}>
-            <button className="flex items-center justify-center w-7 h-7 rounded-full bg-lamaSky">
-
-            <Image src="/view.png" alt="view" width={16} height={16}/>
-            </button>
-            {role==='admin'&&
-              <button className="flex items-center justify-center w-7 h-7 rounded-full bg-lamaPurple">
-
-              <Image src="/delete.png" alt="view" width={16} height={16}/>
-              </button>
-            }
-
-            </Link>
+           
+          {(role === "admin" || role === "teacher") && (
+          <>
+            <FormModal table="result" type="update" data={item} />
+            <FormModal table="result" type="delete" id={item.id} />
+          </>
+          )}
           </div>
         </td>
       </tr>
@@ -114,11 +109,8 @@ const ResultsList = () => {
             <button className="w-8 h-8 flex items-center justify-center md:hover:brightness-75 rounded-full bg-lamaYellow">
               <Image src="/sort.png" alt="sortlist" width={14} height={14} />
             </button>
-            {role==="admin"&&(
-
-              <button className="w-8 h-8 flex items-center justify-center md:hover:brightness-75 rounded-full bg-lamaYellow">
-              <Image src="/create.png" alt="add" width={14} height={14} />
-            </button>
+            {(role === "admin" || role === "teacher") && (
+              <FormModal table="result" type="create" />
             )}
           </div>
         </div>
