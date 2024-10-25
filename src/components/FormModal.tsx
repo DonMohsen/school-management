@@ -1,6 +1,25 @@
 "use client"
 import Image from 'next/image';
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import { useFormState } from 'react-dom';
+
+// const deleteActionMap = {
+//   subject: deleteSubject,
+//   class: deleteClass,
+//   teacher: deleteTeacher,
+//   student: deleteStudent,
+//   exam: deleteExam,
+// // TODO: OTHER DELETE ACTIONS
+//   parent: deleteSubject,
+//   lesson: deleteSubject,
+//   assignment: deleteSubject,
+//   result: deleteSubject,
+//   attendance: deleteSubject,
+//   event: deleteSubject,
+//   announcement: deleteSubject,
+// };
+
 type TableEnum = 
   | "teacher"
   | "student"
@@ -22,6 +41,33 @@ const FormModal = ({table,type,data,id}:
         id?: number | string;
     }
 ) => {
+  const Form = () => {
+    // const [state, formAction] = useFormState(deleteActionMap[table], {
+    //   success: false,
+    //   error: false,
+    // });
+
+    // const router = useRouter();
+
+    // useEffect(() => {
+    //   if (state.success) {
+    //     toast(`${table} has been deleted!`);
+    //     setOpen(false);
+    //     router.refresh();
+    //   }
+    // }, [state, router]);
+    return type==="delete"&& id?(
+      <form action="" className='p-4 flex flex-col gap-4'>
+        <span className='text-center font-medium p-4 '>All data will be deleted not temprary but peeermenantly, are you sure to delete this {table}?</span>
+      <button className='bg-red-700 text-white rounded-md border-none py-2 hover:brightness-125 w-max px-10 self-center'>Delete</button>
+      </form>
+    ):
+    (
+      "create or update form"
+    )
+  }
+  const [open, setOpen] = useState(false);
+
     const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
     const bgColor =
       type === "create"
@@ -30,10 +76,32 @@ const FormModal = ({table,type,data,id}:
         ? "bg-lamaSky"
         : "bg-lamaPurple";
   return (
-    < button className={`${size} flex items-center justify-center rounded-full hover:brightness-75 ${bgColor}`}>
-        <Image src={`/${type}.png`} alt={type} width={16} height={16}/>
-    </button>
-  )
-}
+    <>
+    <button
+    className={`${size} flex items-center justify-center rounded-full ${bgColor}`}
+    onClick={() => setOpen(true)}
+  >
+    <Image src={`/${type}.png`} alt="" width={16} height={16} />
+  </button>
+  {open && (
+    <div className="w-screen h-screen absolute left-0 top-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+      <div className="bg-white p-4 rounded-md relative w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%]">
+        <Form />
+        
+        <div
+          className="absolute top-4 right-4 cursor-pointer"
+          onClick={() => setOpen(false)}
+        >
+          <button className='bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center p-2'>
 
-export default FormModal
+          <Image src="/close.png" alt="" width={14} height={14}  />
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+  </>
+  )
+
+}
+export default FormModal;
