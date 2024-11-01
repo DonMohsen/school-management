@@ -1,9 +1,17 @@
 "use client"
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom';
-
+// import TeacherForm from './forms/TeacherForm';
+// import StudentForm from './forms/StudentForm';
+// import SubjectForm from './forms/SubjectForm';
+// import ExamForm from './forms/ExamForm';
+// import ClassForm from './forms/ClassForm';
+const ClassForm=dynamic(()=>import("./forms/ClassForm"),{
+  loading:()=><h1>Loading...</h1>
+})
 // const deleteActionMap = {
 //   subject: deleteSubject,
 //   class: deleteClass,
@@ -63,8 +71,11 @@ const FormModal = ({table,type,data,id}:
       </form>
     ):
     (
-      "create or update form"
+      // "create or update form"
+      <ClassForm  type='create' data={data}/>
+
     )
+
   }
   const [open, setOpen] = useState(false);
 
@@ -78,7 +89,7 @@ const FormModal = ({table,type,data,id}:
   return (
     <>
     <button
-    className={`${size} flex items-center justify-center rounded-full ${bgColor}`}
+    className={`${size} flex items-center justify-center rounded-full hover:brightness-75 ${bgColor}`}
     onClick={() => setOpen(true)}
   >
     <Image src={`/${type}.png`} alt="" width={16} height={16} />
@@ -92,9 +103,9 @@ const FormModal = ({table,type,data,id}:
           className="absolute top-4 right-4 cursor-pointer"
           onClick={() => setOpen(false)}
         >
-          <button className='bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center p-2'>
+          <button className='bg-red-400 hover:bg-red-500 rounded-full flex items-center justify-center p-2'>
 
-          <Image src="/close.png" alt="" width={14} height={14}  />
+          <Image src="/close.png" alt="" width={14} height={14} className='text-black fill-black'  />
           </button>
         </div>
       </div>

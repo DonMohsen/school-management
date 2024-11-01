@@ -1,5 +1,6 @@
 import Announcements from '@/components/Announcements'
 import BigCalendar from '@/components/BigCalendar'
+import FormModal from '@/components/FormModal'
 import Performance from '@/components/Performance'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +21,18 @@ const SingleTeacherPage = () => {
                     src="https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&w=1200" alt='' width={144} height={144}/>
                     </div>
                     <div className='w-2/3 flex flex-col justify-between gap-4'>
+                    <div className='flex items-center gap-4 justify-start'>
+
                     <h1 className='text-xl font-semibold'>random name</h1>
+                    <FormModal table='teacher' type='update' data={{
+                        
+                        id:1,
+                        userName:"random",
+                        email:"www.fsdmgldf@gmail.com",
+                        
+                    }
+                }/>
+                </div>
                     <p className='text-sm text-gray-500'>description Lorem ipsum dolor sit, amet consectetur adipisicing.</p>
                     <div className='flex items-center justify-between gap-2 flex-wrap text-xs font-medium'>
                         <div className='w-full md:w-1/3 flex items-center gap-2 lg:w-full'>
