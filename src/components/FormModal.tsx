@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom';
+import SubjectForm from './forms/SubjectForm';
 // import TeacherForm from './forms/TeacherForm';
 // import StudentForm from './forms/StudentForm';
 // import SubjectForm from './forms/SubjectForm';
@@ -72,7 +73,7 @@ const FormModal = ({table,type,data,id}:
     ):
     (
       // "create or update form"
-      <ClassForm  type='create' data={data}/>
+      <SubjectForm  type='create' />
 
     )
 

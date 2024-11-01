@@ -85,7 +85,7 @@ const SubjectsList = () => {
             </button>
             {role==="admin"&&(
 
-              <FormModal table="subject" type="create"/>
+              <FormModal table="subject" type="create" />
             )}
           </div>
         </div>
