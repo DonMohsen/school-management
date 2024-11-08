@@ -3,12 +3,22 @@ import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { classesData, lessonsData, role, teachersData } from "@/lib/data";
+import prisma from "@/lib/prisma";
+import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { Class, Lesson, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+type LessonList = Lesson & { subject: Subject } & { class: Class } & {
+  teacher: Teacher;
+};
 
-const TeacherList = () => {
+const TeacherList = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+})  => {
   const columns = [
     {
       header: "Subject Name",
@@ -33,47 +43,81 @@ const TeacherList = () => {
         ]
       : []),
   ];
-    const renderRow=(item:any)=>(
-      <tr 
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
-       key={item.id}>
-        <td className="flex  items-center p-4 gap-4">
 
+  
+const renderRow = (item: LessonList) => (
+  <tr
+    key={item.id}
+    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+  >
+    <td className="flex items-center gap-4 p-4">{item.subject.name}</td>
+    <td>{item.class.name}</td>
+    <td className="hidden md:table-cell">
+      {item.teacher.name + " " + item.teacher.surname}
+    </td>
+    <td>
+      <div className="flex items-center gap-2">
+        {role === "admin" && (
+          <>
+            <FormModal table="lesson" type="update" data={item} />
+            <FormModal table="lesson" type="delete" id={item.id} />
+          </>
+        )}
+      </div>
+    </td>
+  </tr>
+);
 
-        <div className="flex flex-col ">
-          <h3 className="font-semibold">{item.subject}</h3>
-         
+  const { page, ...queryParams } = searchParams;
 
-        </div>
-        </td>
-        <td  className="hidden md:table-cell">
-          {item.class}
-        </td>
-        <td  className="hidden md:table-cell">
-          {item.teacher}
-        </td>
-      
-      
-        <td>
-          <div className="flex items-center gap-2 ">
+  const p = page ? parseInt(page) : 1;
 
-         
-            {role==='admin'&&
-             <>
-             <FormModal table="lesson" type="update" data={item} />
-             <FormModal table="lesson" type="delete" id={item.id} />
-           </>
-            }
+  // URL PARAMS CONDITION
 
-          </div>
-        </td>
-      </tr>
-    )
+  const query: Prisma.LessonWhereInput = {};
+
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "classId":
+            query.classId = parseInt(value);
+            break;
+          case "teacherId":
+            query.teacherId = value;
+            break;
+          case "search":
+            query.OR = [
+              { subject: { name: { contains: value, mode: "insensitive" } } },
+              { teacher: { name: { contains: value, mode: "insensitive" } } },
+            ];
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  const [data, count] = await prisma.$transaction([
+    prisma.lesson.findMany({
+      where: query,
+      include: {
+        subject: { select: { name: true } },
+        class: { select: { name: true } },
+        teacher: { select: { name: true, surname: true } },
+      },
+      take: ITEMS_PER_PAGE,
+      skip: ITEMS_PER_PAGE * (p - 1),
+    }), 
+    prisma.lesson.count({ where: query }),
+  ]);
+
   return (
     <div className=" bg-white p-4 rounded-md flex-1 m-4 mt-0">
       {/* //!TOP */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">All Classes</h1>
+        <h1 className="hidden md:block text-lg font-semibold">All Lessons</h1>
         {/* //!SEARCHBAR */}
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
@@ -97,9 +141,9 @@ const TeacherList = () => {
         </div>
       </div>
       {/* //!LIST */}
-      <Table columns={columns} renderRow={renderRow} data={lessonsData}/>
+      <Table columns={columns} renderRow={renderRow} data={data}/>
       {/* //!PAGINATION */}
-      <Pagination/>
+      <Pagination count={count} page={p}/>
     </div>
     
     

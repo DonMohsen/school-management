@@ -5,7 +5,7 @@ import TableSearch from "@/components/TableSearch";
 import { role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
-import { Class, Subject, Teacher } from "@prisma/client";
+import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -72,15 +72,47 @@ type TeacherListType=Teacher&{subjects:Subject[]}&{classes:Class[]}
 const TeacherList =async ({searchParams,}:{searchParams:{[key:string]:string|undefined}}) => {
   const {page,...queryParams}=searchParams;
   const p =page? Number(page):1;
-  const teachers=await prisma.teacher.findMany({
-    include:{
-      classes:true,
-      subjects:true
-    },
-    take:ITEMS_PER_PAGE,
-    skip:ITEMS_PER_PAGE*(p-1)
-  })
-  console.log(searchParams);
+
+  //!Url param conditions........
+  const query: Prisma.TeacherWhereInput = {};
+
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "classId":
+            query.lessons = {
+              some: {
+                classId: parseInt(value),
+              },
+            };
+            break;
+          case "search":
+            query.name = { contains: value, mode: "insensitive" };
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+  const [data,count]=
+  await prisma.$transaction([
+
+     prisma.teacher.findMany({
+      where:query,
+      include:{
+        classes:true,
+        subjects:true
+      },
+      take:ITEMS_PER_PAGE,
+      skip:ITEMS_PER_PAGE*(p-1)
+    }),
+    prisma.teacher.count({
+      where:query
+
+    })
+  ])
   
   const columns = [
     {
@@ -143,18 +175,16 @@ const TeacherList =async ({searchParams,}:{searchParams:{[key:string]:string|und
             </button>
             {role==="admin"&&(
 
-            //   <button className="w-8 h-8 flex items-center justify-center md:hover:brightness-75 rounded-full bg-lamaYellow">
-            //   <Image src="/create.png" alt="add" width={14} height={14} />
-            // </button>
+            
             <FormModal table="teacher" type="create" />
             )}
           </div>
         </div>
       </div>
       {/* //!LIST */}
-      <Table columns={columns} renderRow={renderRow} data={teachers}/>
+      <Table columns={columns} renderRow={renderRow} data={data}/>
       {/* //!PAGINATION */}
-      <Pagination/>
+      <Pagination page={p} count={count} />
     </div>
     
     

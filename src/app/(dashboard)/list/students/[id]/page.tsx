@@ -100,9 +100,11 @@ const SingleStudentPage = () => {
             <h1 className='text-xl font-semibold '>Shortcuts</h1>
             <div className='mt-4 gap-4 flex flex-wrap text-xs text-gray-500 '>
                 <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Classes</Link>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Teachers</Link>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Exams</Link>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Results</Link>
+                <Link href={`/list/teachers?classId=${2}`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Teachers</Link>
+                <Link href={`/list/exams?classId=${`4`}`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Exams</Link>
+                <Link href="/list/lessons?classId=2" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Lessons</Link>
+                <Link href={`/list/results?studentId=student2`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Results</Link>
+                <Link href="/list/parents?search=15" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Student&apos; Parents</Link>
 
             </div>
 

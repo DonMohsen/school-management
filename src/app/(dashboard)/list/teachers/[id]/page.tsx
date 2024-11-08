@@ -106,10 +106,11 @@ const SingleTeacherPage = () => {
         <div className='bg-white p-4 rounded-md'>
             <h1 className='text-xl font-semibold '>Shortcuts</h1>
             <div className='mt-4 gap-4 flex flex-wrap text-xs text-gray-500 '>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Classes</Link>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Students</Link>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Exams</Link>
-                <Link href="/" className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Assignments</Link>
+                <Link href={`/list/classes?supervisorId=teacher10`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Classes</Link>
+                <Link href={`/list/lessons?teacherId=teacher2`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Lessons</Link>
+                <Link href={`/list/students?teacherId=teacher2`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Students</Link>
+                <Link href={`/list/exams?teacherId=${`teacher10`}`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Exams</Link>
+                <Link href={`/list/assignments?teacherId=${`teacher10`}`} className='p-3 rounded-md even:bg-lamaSky odd:bg-lamaYellow hover:brightness-90 '>Teacher&apos; Assignments</Link>
 
             </div>
 
