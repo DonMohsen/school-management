@@ -2,12 +2,11 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { classesData, role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { getUserRole } from "@/lib/utils";
 import { Class, Prisma, Teacher } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 type ClassList = Class & { supervisor: Teacher };
@@ -17,6 +16,8 @@ const ClassesList = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 })=> {
+  const role=await getUserRole();
+
   const columns = [
     {
       header: "Class name",

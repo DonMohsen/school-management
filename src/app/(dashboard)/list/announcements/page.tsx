@@ -2,14 +2,14 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { announcementsData, eventsData, role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { getUserRole } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
 type AnnouncementList = Announcement & { class: Class };
 
 const AnnouncementsList =async ({
@@ -17,6 +17,7 @@ const AnnouncementsList =async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 })  => {
+const role=await getUserRole();
   const columns = [
     {
       header: "Title",
