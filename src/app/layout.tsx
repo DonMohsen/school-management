@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import {
+  ClerkProvider} from '@clerk/nextjs'
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -24,6 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
@@ -35,5 +38,7 @@ export default function RootLayout({
         {children}
       </body>
     </html>
+    </ClerkProvider>
+
   );
 }

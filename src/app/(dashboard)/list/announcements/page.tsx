@@ -77,7 +77,11 @@ const AnnouncementsList =async ({
       if (value !== undefined) {
         switch (key) {
           case "search":
-            query.title = { contains: value, mode: "insensitive" };
+            query.OR = [
+              { class: { name: { contains: value, mode: "insensitive" } } },
+               { title: { contains: value, mode: "insensitive" } } ,
+              
+            ];
             break;
           default:
             break;

@@ -29,13 +29,12 @@ const ResultsList =  async ({
 })  => {
   const columns = [
     {
-      header: "Subject",
-      accessor: "subject",
+      header: "Title",
+      accessor: "title",
     },
     {
       header: "Student",
       accessor: "student",
-      className: "",
     },
     {
       header: "Score",
@@ -45,19 +44,19 @@ const ResultsList =  async ({
     {
       header: "Teacher",
       accessor: "teacher",
-      className: "hidden lg:table-cell",
+      className: "hidden md:table-cell",
     },
     {
       header: "Class",
       accessor: "class",
-      className: "hidden lg:table-cell",
+      className: "hidden md:table-cell",
     },
     {
       header: "Date",
       accessor: "date",
-      className: "hidden xl:table-cell",
+      className: "hidden md:table-cell",
     },
-    ...(role === "admin"
+    ...(role === "admin" || role === "teacher"
       ? [
           {
             header: "Actions",
@@ -69,30 +68,30 @@ const ResultsList =  async ({
   
 const renderRow = (item: ResultList) => (
   <tr
-    key={item.id}
-    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
-  >
-    <td className="flex items-center gap-4 p-4">{item.title}</td>
-    <td>{item.studentName + " " + item.studentName}</td>
-    <td className="hidden md:table-cell">{item.score}</td>
-    <td className="hidden md:table-cell">
-      {item.teacherName + " " + item.teacherSurname}
-    </td>
-    <td className="hidden md:table-cell">{item.className}</td>
-    <td className="hidden md:table-cell">
-      {new Intl.DateTimeFormat("en-US").format(item.startTime)}
-    </td>
-    <td>
-      <div className="flex items-center gap-2">
-        {(role === "admin" || role === "teacher") && (
-          <>
-            <FormModal table="result" type="update" data={item} />
-            <FormModal table="result" type="delete" id={item.id} />
-          </>
-        )}
-      </div>
-    </td>
-  </tr>
+  key={item.id}
+  className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+>
+  <td className="flex items-center gap-4 p-4">{item.title}</td>
+  <td>{item.studentName + " " + item.studentName}</td>
+  <td className="hidden md:table-cell">{item.score}</td>
+  <td className="hidden md:table-cell">
+    {item.teacherName + " " + item.teacherSurname}
+  </td>
+  <td className="hidden md:table-cell">{item.className}</td>
+  <td className="hidden md:table-cell">
+    {new Intl.DateTimeFormat("en-US").format(item.startTime)}
+  </td>
+  <td>
+    <div className="flex items-center gap-2">
+      {(role === "admin" || role === "teacher") && (
+        <>
+          <FormModal table="result" type="update" data={item} />
+          <FormModal table="result" type="delete" id={item.id} />
+        </>
+      )}
+    </div>
+  </td>
+</tr>
 );
 
   const { page, ...queryParams } = searchParams;
@@ -114,6 +113,7 @@ const renderRow = (item: ResultList) => (
             query.OR = [
               { exam: { title: { contains: value, mode: "insensitive" } } },
               { student: { name: { contains: value, mode: "insensitive" } } },
+              {assignment:{title:{contains:value,mode:"insensitive"}}}
             ];
             break;
           default:
