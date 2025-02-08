@@ -2,9 +2,11 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { classesData, examsData, lessonsData, role, teachersData } from "@/lib/data";
+import { classesData, examsData, lessonsData, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { getUserId, getUserRole } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Exam, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,6 +25,9 @@ const TeacherList  = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 })  => {
+  const role=await getUserRole();
+    const currentUserId=await getUserId();
+
   const columns = [
     {
       header: "Subject",
@@ -43,7 +48,7 @@ const TeacherList  = async ({
         accessor: "date",
         className: "hidden md:table-cell",
       },
-    ...(role === "admin"
+    ...(role === "admin"||role==="teacher"
       ? [
           {
             header: "Actions",
@@ -112,34 +117,34 @@ const renderRow = (item: ExamList) => (
 
   // ROLE CONDITIONS
 
-  // switch (role) {
-  //   case "admin":
-  //     break;
-  //   case "teacher":
-  //     query.lesson.teacherId = currentUserId!;
-  //     break;
-  //   case "student":
-  //     query.lesson.class = {
-  //       students: {
-  //         some: {
-  //           id: currentUserId!,
-  //         },
-  //       },
-  //     };
-  //     break;
-  //   case "parent":
-  //     query.lesson.class = {
-  //       students: {
-  //         some: {
-  //           parentId: currentUserId!,
-  //         },
-  //       },
-  //     };
-  //     break;
+  switch (role) {
+    case "admin":
+      break;
+    case "teacher":
+      query.lesson.teacherId = currentUserId!;
+      break;
+    case "student":
+      query.lesson.class = {
+        students: {
+          some: {
+            id: currentUserId!,
+          },
+        },
+      };
+      break;
+    case "parent":
+      query.lesson.class = {
+        students: {
+          some: {
+            parentId: currentUserId!,
+          },
+        },
+      };
+      break;
 
-  //   default:
-  //     break;
-  // }
+    default:
+      break;
+  }
 
   const [data, count] = await prisma.$transaction([
     prisma.exam.findMany({

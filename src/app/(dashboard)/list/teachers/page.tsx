@@ -5,6 +5,7 @@ import TableSearch from "@/components/TableSearch";
 import { role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { getUserId, getUserRole } from "@/lib/utils";
 import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,7 +73,8 @@ type TeacherListType=Teacher&{subjects:Subject[]}&{classes:Class[]}
 const TeacherList =async ({searchParams,}:{searchParams:{[key:string]:string|undefined}}) => {
   const {page,...queryParams}=searchParams;
   const p =page? Number(page):1;
-
+const role=await getUserRole();
+  const currentUserId=await getUserId();
   //!Url param conditions........
   const query: Prisma.TeacherWhereInput = {};
 
@@ -180,6 +182,7 @@ const TeacherList =async ({searchParams,}:{searchParams:{[key:string]:string|und
             )}
           </div>
         </div>
+        
       </div>
       {/* //!LIST */}
       <Table columns={columns} renderRow={renderRow} data={data}/>

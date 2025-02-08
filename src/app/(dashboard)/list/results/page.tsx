@@ -5,6 +5,7 @@ import TableSearch from "@/components/TableSearch";
 import { resultsData, role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { getUserId, getUserRole } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,6 +28,8 @@ const ResultsList =  async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 })  => {
+  const role=await getUserRole();
+    const currentUserId=await getUserId();
   const columns = [
     {
       header: "Title",
@@ -125,31 +128,32 @@ const renderRow = (item: ResultList) => (
 
   // ROLE CONDITIONS
 
-  // switch (role) {
-  //   case "admin":
-  //     break;
-  //   case "teacher":
-  //     query.OR = [
-  //       { exam: { lesson: { teacherId: currentUserId! } } },
-  //       { assignment: { lesson: { teacherId: currentUserId! } } },
-  //     ];
-  //     break;
+  switch (role) {
+    case "admin":
+      break;
+    case "teacher":
+      query.OR = [
+        { exam: { lesson: { teacherId: currentUserId! } } },
+        { assignment: { lesson: { teacherId: currentUserId! } } },
+      ];
+      break;
 
-  //   case "student":
-  //     query.studentId = currentUserId!;
-  //     break;
+    case "student":
+      query.studentId = currentUserId!;
+      break;
 
-  //   case "parent":
-  //     query.student = {
-  //       parentId: currentUserId!,
-  //     };
-  //     break;
-  //   default:
-  //     break;
-  // }
+    case "parent":
+      query.student = {
+        parentId: currentUserId!,
+      };
+      break;
+    default:
+      break;
+  }
 
   const [dataRes, count] = await prisma.$transaction([
     prisma.result.findMany({
+      
       where: query,
       include: {
         student: { select: { name: true, surname: true } },

@@ -2,9 +2,11 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { parentsData, role, studentsData, teachersData } from "@/lib/data";
+import { parentsData, studentsData, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { getUserId, getUserRole } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 import { Parent, Prisma, Student } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +19,8 @@ const ParentsList =async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
+    const role=await getUserRole();
+      const currentUserId=await getUserId();
   const columns = [
     {
       header: "Info",
