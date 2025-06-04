@@ -105,7 +105,7 @@ const StudentForm = ({
         Personal Information
       </span>
       <CldUploadWidget
-        uploadPreset="school"
+        uploadPreset="School-Management"
         onSuccess={(result, { widget }) => {
           setImg(result.info);
           widget.close();
